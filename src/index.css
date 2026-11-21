@@ -41,3 +41,13 @@ html, body, #root {
     padding-right: 1rem !important;
   }
 }
+/* Long Email & URL Mobile Wrap Fix */
+a, p, span, div {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+a[href^="mailto:"] {
+  word-break: break-all;
+  font-size: clamp(0.85rem, 3.5vw, 1rem);
+}
