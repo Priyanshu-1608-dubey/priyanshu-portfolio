@@ -13,6 +13,9 @@ import {
   BarChart3,
   TrendingUp,
   RotateCcw,
+  Copy,
+  Check,
+  Mail,
 } from 'lucide-react';
 
 const roles = [
@@ -264,6 +267,7 @@ export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
   const [activeAnalyticsTab, setActiveAnalyticsTab] = useState('fraud');
+  const [copiedEmail, setCopiedEmail] = useState(false);
   const [pathKey, setPathKey] = useState(0);
   const [cursor, setCursor] = useState({ x: 500, y: 300, active: false });
   const heroRef = useRef(null);
@@ -283,6 +287,12 @@ export default function Home() {
       y: e.clientY - rect.top,
       active: true,
     });
+  };
+
+  const handleCopyEmail = () => {
+    navigator.clipboard.writeText('dubeypriyanshu58463@gmail.com');
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 2200);
   };
 
   const currentAnalytics =
@@ -837,6 +847,58 @@ export default function Home() {
                 </div>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 7. QUICK CONNECT & 1-CLICK EMAIL COPY ================= */}
+      <section className="py-20 px-4 sm:px-6 md:px-12 border-t border-white/10">
+        <div className="max-w-5xl mx-auto rounded-3xl bg-gradient-to-br from-indigo-600/20 via-purple-600/15 to-[#0e0c1d] border border-purple-400/30 p-6 sm:p-10 text-center space-y-6 backdrop-blur-xl">
+          <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300">
+            OPEN TO OPPORTUNITIES • PUNE &amp; REMOTE
+          </p>
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-white">
+            Let&apos;s turn data into your next business win.
+          </h2>
+          <p className="text-zinc-300 text-sm sm:text-base max-w-xl mx-auto">
+            Looking for a Data Analyst, BI Analyst, or ML intern/collaborator? Reach out directly or copy my email in one click.
+          </p>
+
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <a
+              href="mailto:dubeypriyanshu58463@gmail.com"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold text-xs sm:text-sm shadow-lg shadow-purple-600/30 hover:opacity-95 transition break-all"
+            >
+              <Mail size={16} className="shrink-0" />
+              <span>dubeypriyanshu58463@gmail.com</span>
+            </a>
+
+            <button
+              onClick={handleCopyEmail}
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.07] hover:bg-white/[0.12] border border-white/15 text-white font-semibold text-xs sm:text-sm transition"
+            >
+              {copiedEmail ? (
+                <>
+                  <Check size={16} className="text-emerald-400" />
+                  <span className="text-emerald-300">Copied!</span>
+                </>
+              ) : (
+                <>
+                  <Copy size={16} className="text-purple-300" />
+                  <span>Copy Email</span>
+                </>
+              )}
+            </button>
+
+            <a
+              href="https://www.linkedin.com/in/priyanshudubey1608"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.04] hover:border-purple-400 border border-white/10 text-zinc-200 font-semibold text-xs sm:text-sm transition"
+            >
+              <span>LinkedIn DM</span>
+              <ExternalLink size={15} />
+            </a>
           </div>
         </div>
       </section>
