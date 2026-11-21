@@ -143,6 +143,21 @@ const linkedinHighlights = [
   },
 ];
 
+const techStackGroups = [
+  {
+    category: 'Programming & Data',
+    tools: ['Python', 'Pandas', 'NumPy', 'SQL', 'PostgreSQL'],
+  },
+  {
+    category: 'BI & Analytics',
+    tools: ['Power BI', 'Excel Dashboards', 'Exploratory Data Analysis', 'KPI Storytelling'],
+  },
+  {
+    category: 'Machine Learning',
+    tools: ['Scikit-Learn', 'Fraud Detection', 'Time-Series Forecasting', 'Feature Engineering'],
+  },
+];
+
 // Interactive Glowing Node Canvas (Inspired by Experiments Section)
 function DataConstellation() {
   const canvasRef = useRef(null);
@@ -785,6 +800,41 @@ export default function Home() {
                 >
                   Read on LinkedIn <ExternalLink size={13} />
                 </a>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 6. CATEGORIZED TECH STACK ================= */}
+      <section className="py-20 px-4 sm:px-6 md:px-12 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-10">
+            <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300 mb-2">
+              CORE TOOLKIT
+            </p>
+            <h2 className="text-3xl sm:text-5xl font-extrabold">
+              Tech stack <span className="text-zinc-500">I work with.</span>
+            </h2>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {techStackGroups.map((group) => (
+              <div
+                key={group.category}
+                className="p-6 rounded-3xl bg-white/[0.03] border border-white/10 space-y-4"
+              >
+                <h3 className="text-base font-bold text-white">{group.category}</h3>
+                <div className="flex flex-wrap gap-2">
+                  {group.tools.map((tool) => (
+                    <span
+                      key={tool}
+                      className="px-3 py-1.5 rounded-full text-xs font-semibold bg-[#0e0c1d] text-purple-200 border border-purple-400/25"
+                    >
+                      {tool}
+                    </span>
+                  ))}
+                </div>
               </div>
             ))}
           </div>
