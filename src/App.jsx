@@ -7,6 +7,7 @@ import OfferLetters from './pages/OfferLetters';
 import Certificates from './pages/Certificates';
 import Achievements from './pages/Achievements';
 import Contact from './pages/Contact';
+import PortfolioChatbot from './components/PortfolioChatbot';
 
 export default function App() {
   return (
@@ -21,6 +22,7 @@ export default function App() {
         <Route path="/achievements" element={<Achievements />} />
         <Route path="/contact" element={<Contact />} />
       </Routes>
+      <PortfolioChatbot />
     </Router>
   );
 }
