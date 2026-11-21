@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { MessageSquare, X, Send, Sparkles, Bot, User } from 'lucide-react';
+import { X, Send, Sparkles } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const quickQuestions = [
@@ -31,7 +31,38 @@ function getBotReply(input) {
     return 'You can view all of Priyanshu’s verified Offer Letters & Certifications directly in the Offer Letters & Certs tab on this portfolio!';
   }
 
-  return 'I’m Priyanshu’s Portfolio AI! Ask me about his skills (Python, SQL, Power BI, ML), projects, MCA at SPPU Pune, 7K+ LinkedIn journey, or contact details.';
+  return 'I’m Priyanshu’s Emoji AI Buddy! Ask me about his skills (Python, SQL, Power BI, ML), projects, MCA at SPPU Pune, 7K+ LinkedIn journey, or contact details.';
+}
+
+// Hilta-dulta Animated Emoji Character
+function AnimatedBotEmoji({ isTyping = false, sizeClass = 'text-3xl sm:text-4xl' }) {
+  return (
+    <motion.span
+      role="img"
+      aria-label="AI Bot"
+      animate={
+        isTyping
+          ? {
+              y: [0, -5, 0, -3, 0],
+              rotate: [-6, 8, -8, 6, -6],
+              scale: [1, 1.08, 1, 1.05, 1],
+            }
+          : {
+              y: [0, -7, 0],
+              rotate: [-5, 6, -5],
+              scale: [1, 1.04, 1],
+            }
+      }
+      transition={{
+        duration: isTyping ? 1.1 : 2.8,
+        repeat: Infinity,
+        ease: 'easeInOut',
+      }}
+      className={`inline-block select-none leading-none drop-shadow-[0_6px_14px_rgba(168,85,247,0.45)] ${sizeClass}`}
+    >
+      🤖
+    </motion.span>
+  );
 }
 
 export default function PortfolioChatbot() {
@@ -42,7 +73,7 @@ export default function PortfolioChatbot() {
     {
       id: 1,
       sender: 'bot',
-      text: 'Hi! 👋 I’m Priyanshu’s AI Assistant. Ask me anything about his Data Analytics skills, ML projects, or availability!',
+      text: 'Hey! 👋 Main hoon Priyanshu ka AI Buddy. Skills, ML projects, ya availability ke baare mein kuch bhi poochho!',
     },
   ]);
   const bottomRef = useRef(null);
@@ -77,36 +108,30 @@ export default function PortfolioChatbot() {
         {isOpen && (
           <motion.div
             key="chat-panel"
-            initial={{ opacity: 0, y: 24, scale: 0.92 }}
+            initial={{ opacity: 0, y: 24, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.94 }}
-            transition={{ type: 'spring', stiffness: 320, damping: 26 }}
+            transition={{ type: 'spring', stiffness: 320, damping: 25 }}
             style={{ transformOrigin: 'bottom right' }}
-            className="mb-3 w-[calc(100vw-2rem)] sm:w-96 max-h-[78dvh] rounded-3xl bg-[#0e0c1d]/95 backdrop-blur-2xl border border-purple-400/35 shadow-[0_20px_60px_rgba(139,92,246,0.28)] overflow-hidden flex flex-col"
+            className="mb-3 w-[calc(100vw-2rem)] sm:w-96 max-h-[78dvh] rounded-3xl bg-[#0e0c1d]/95 backdrop-blur-2xl border border-purple-400/35 shadow-[0_20px_60px_rgba(139,92,246,0.3)] overflow-hidden flex flex-col"
           >
-            {/* Animated Gradient Header */}
-            <div className="relative px-4 py-3.5 bg-gradient-to-r from-indigo-600/35 via-purple-600/30 to-pink-600/25 border-b border-white/10 flex items-center justify-between shrink-0">
-              <div className="flex items-center gap-2.5">
-                <motion.div
-                  animate={{ rotate: [0, 8, -8, 0] }}
-                  transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="w-9 h-9 rounded-full bg-purple-500/20 border border-purple-400/40 flex items-center justify-center shadow-inner"
-                >
-                  <Sparkles size={16} className="text-purple-300" />
-                </motion.div>
+            {/* Header with Hilta-dulta Emoji */}
+            <div className="px-4 py-3 bg-gradient-to-r from-indigo-600/35 via-purple-600/30 to-pink-600/25 border-b border-white/10 flex items-center justify-between shrink-0">
+              <div className="flex items-center gap-3">
+                <div className="w-11 h-11 rounded-2xl bg-purple-500/20 border border-purple-400/40 flex items-center justify-center">
+                  <AnimatedBotEmoji isTyping={isTyping} sizeClass="text-2xl" />
+                </div>
                 <div>
                   <h4 className="text-sm font-bold text-white leading-none flex items-center gap-1.5">
-                    Ask PD AI
-                    <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-purple-400/20 text-purple-200 font-semibold">
-                      AI
-                    </span>
+                    PD AI Buddy
+                    <Sparkles size={13} className="text-purple-300" />
                   </h4>
                   <span className="text-[11px] text-emerald-400 flex items-center gap-1.5 mt-1">
                     <span className="relative flex h-2 w-2">
                       <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
                       <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
                     </span>
-                    {isTyping ? 'Typing an answer...' : 'Online • Portfolio Assistant'}
+                    {isTyping ? 'Soch raha hoon...' : 'Zinda & Ready • Ask Anything'}
                   </span>
                 </div>
               </div>
@@ -132,15 +157,13 @@ export default function PortfolioChatbot() {
                     layout
                     initial={{ opacity: 0, y: 12, scale: 0.96 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
-                    transition={{ duration: 0.25, ease: 'easeOut' }}
+                    transition={{ duration: 0.25 }}
                     className={`flex items-end gap-2 ${
                       msg.sender === 'user' ? 'justify-end' : 'justify-start'
                     }`}
                   >
                     {msg.sender === 'bot' && (
-                      <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-400/35 flex items-center justify-center shrink-0">
-                        <Bot size={13} className="text-purple-300" />
-                      </div>
+                      <span className="text-xl leading-none select-none shrink-0">🤖</span>
                     )}
 
                     <div
@@ -154,15 +177,13 @@ export default function PortfolioChatbot() {
                     </div>
 
                     {msg.sender === 'user' && (
-                      <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                        <User size={13} className="text-zinc-300" />
-                      </div>
+                      <span className="text-lg leading-none select-none shrink-0">🙋‍♂️</span>
                     )}
                   </motion.div>
                 ))}
               </AnimatePresence>
 
-              {/* Animated Bot Typing Dots */}
+              {/* Typing Dots */}
               {isTyping && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
@@ -170,9 +191,7 @@ export default function PortfolioChatbot() {
                   exit={{ opacity: 0 }}
                   className="flex items-center gap-2"
                 >
-                  <div className="w-6 h-6 rounded-full bg-purple-500/20 border border-purple-400/35 flex items-center justify-center shrink-0">
-                    <Bot size={13} className="text-purple-300" />
-                  </div>
+                  <AnimatedBotEmoji isTyping={true} sizeClass="text-xl" />
                   <div className="px-4 py-3 rounded-2xl rounded-bl-sm bg-white/[0.06] border border-white/10 flex items-center gap-1.5">
                     <motion.span
                       animate={{ y: [0, -4, 0], opacity: [0.4, 1, 0.4] }}
@@ -227,7 +246,7 @@ export default function PortfolioChatbot() {
               />
               <motion.button
                 type="submit"
-                whileHover={{ scale: 1.05 }}
+                whileHover={{ scale: 1.08, rotate: 8 }}
                 whileTap={{ scale: 0.9 }}
                 className="p-2.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:opacity-95 transition shrink-0 shadow-md shadow-purple-600/30"
               >
@@ -238,47 +257,29 @@ export default function PortfolioChatbot() {
         )}
       </AnimatePresence>
 
-      {/* Floating Toggle Button with Breathing Glow */}
+      {/* Hilta-dulta Emoji Floating Button */}
       <div className="relative flex justify-end">
         {!isOpen && (
           <motion.span
-            animate={{ scale: [1, 1.18, 1], opacity: [0.35, 0.7, 0.35] }}
+            animate={{ scale: [1, 1.22, 1], opacity: [0.3, 0.65, 0.3] }}
             transition={{ duration: 2.6, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute inset-0 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 blur-md pointer-events-none"
           />
         )}
 
         <motion.button
-          whileHover={{ scale: 1.06, y: -2 }}
-          whileTap={{ scale: 0.94 }}
+          whileHover={{ scale: 1.08, y: -3 }}
+          whileTap={{ scale: 0.92 }}
           onClick={() => setIsOpen((prev) => !prev)}
-          className="relative flex items-center gap-2 px-4 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-purple-600/40 border border-purple-300/25"
+          className="relative flex items-center gap-2 pl-2.5 pr-4 py-2 rounded-full bg-gradient-to-r from-[#171330] via-[#221946] to-[#2c1b4e] text-white font-semibold shadow-xl shadow-purple-900/50 border border-purple-400/45"
         >
-          <AnimatePresence mode="wait" initial={false}>
-            {isOpen ? (
-              <motion.span
-                key="close-icon"
-                initial={{ rotate: -90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: 90, opacity: 0 }}
-                transition={{ duration: 0.18 }}
-                className="flex items-center"
-              >
-                <X size={19} />
-              </motion.span>
-            ) : (
-              <motion.span
-                key="open-icon"
-                initial={{ rotate: 90, opacity: 0 }}
-                animate={{ rotate: 0, opacity: 1 }}
-                exit={{ rotate: -90, opacity: 0 }}
-                transition={{ duration: 0.18 }}
-                className="flex items-center"
-              >
-                <MessageSquare size={19} />
-              </motion.span>
-            )}
-          </AnimatePresence>
+          {isOpen ? (
+            <span className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center">
+              <X size={18} />
+            </span>
+          ) : (
+            <AnimatedBotEmoji isTyping={false} sizeClass="text-2xl sm:text-3xl" />
+          )}
           <span className="text-xs sm:text-sm">{isOpen ? 'Close' : 'Ask AI'}</span>
         </motion.button>
       </div>
