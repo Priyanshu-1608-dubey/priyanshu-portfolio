@@ -16,6 +16,7 @@ import {
   Copy,
   Check,
   Mail,
+  Phone,
 } from 'lucide-react';
 
 const roles = [
@@ -889,6 +890,24 @@ export default function Home() {
                 </>
               )}
             </button>
+
+            <a
+              href="tel:+919696462869"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white/[0.06] hover:bg-white/[0.12] border border-white/15 text-white font-semibold text-xs sm:text-sm transition"
+            >
+              <Phone size={15} className="text-purple-300 shrink-0" />
+              <span>+91 9696462869</span>
+            </a>
+
+            <a
+              href="https://wa.me/919696462869"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-emerald-500/15 hover:bg-emerald-500/25 border border-emerald-400/35 text-emerald-200 font-semibold text-xs sm:text-sm transition"
+            >
+              <span>WhatsApp</span>
+              <ExternalLink size={14} />
+            </a>
 
             <a
               href="https://www.linkedin.com/in/priyanshudubey1608"
