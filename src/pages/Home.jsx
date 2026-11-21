@@ -83,6 +83,66 @@ const domains = [
   },
 ];
 
+const analyticsTabs = [
+  {
+    id: 'fraud',
+    label: 'Fraud Detection',
+    badge: 'ML • Scikit-Learn',
+    metrics: [
+      { name: 'Model Precision', value: '96.4%', note: 'Imbalanced txn tune' },
+      { name: 'False Positives', value: '-28%', note: 'Threshold optimization' },
+      { name: 'Pipeline Stack', value: 'Python + SQL', note: 'EDA & feature flags' },
+    ],
+    summary:
+      'Flagging high-risk transaction anomalies early using engineered behavioral features and clean SQL joins.',
+  },
+  {
+    id: 'crypto',
+    label: 'Crypto Forecasting',
+    badge: 'Time-Series • EDA',
+    metrics: [
+      { name: 'Assets Tracked', value: 'Multi-Coin', note: 'Rolling volatility' },
+      { name: 'Feature Window', value: '7D / 30D', note: 'Lag & momentum stats' },
+      { name: 'Workflow', value: 'Pandas + NumPy', note: 'Outlier-safe cleaning' },
+    ],
+    summary:
+      'Comparing multi-coin trend momentum and drawdown windows to separate noise from directional signals.',
+  },
+  {
+    id: 'bi',
+    label: 'Executive BI',
+    badge: 'Power BI • KPIs',
+    metrics: [
+      { name: 'Reporting Layer', value: 'Power BI', note: 'Interactive drilldowns' },
+      { name: 'Data Source', value: 'PostgreSQL', note: 'Aggregated KPI views' },
+      { name: 'Audience', value: '7K+ LinkedIn', note: 'Visual storytelling' },
+    ],
+    summary:
+      'Turning raw operational tables into clear KPI cards and decision-ready visual breakdowns.',
+  },
+];
+
+const linkedinHighlights = [
+  {
+    tag: 'SYSTEM & DATA BREAKDOWN',
+    title: 'Backend Structural Crises of Top Tech Giants',
+    takeaway:
+      'Deconstructing scale bottlenecks, infrastructure trade-offs, and revenue realities across global enterprises into crisp visual takeaways.',
+  },
+  {
+    tag: 'FINANCIAL ANALYTICS',
+    title: 'Market Data Cleaning, Indicators & Visual EDA',
+    takeaway:
+      'Turning raw market feeds into candlestick patterns, moving averages, and momentum signals with clean Python workflows.',
+  },
+  {
+    tag: 'CAREER & GROWTH',
+    title: 'Practical Roadmap for Aspiring Data Analysts',
+    takeaway:
+      'How to pair SQL + Python + BI storytelling with real problem-solving instead of just tutorial-following.',
+  },
+];
+
 // Interactive Glowing Node Canvas (Inspired by Experiments Section)
 function DataConstellation() {
   const canvasRef = useRef(null);
@@ -188,6 +248,7 @@ function DataConstellation() {
 export default function Home() {
   const [roleIndex, setRoleIndex] = useState(0);
   const [activeStep, setActiveStep] = useState(0);
+  const [activeAnalyticsTab, setActiveAnalyticsTab] = useState('fraud');
   const [pathKey, setPathKey] = useState(0);
   const [cursor, setCursor] = useState({ x: 500, y: 300, active: false });
   const heroRef = useRef(null);
@@ -208,6 +269,9 @@ export default function Home() {
       active: true,
     });
   };
+
+  const currentAnalytics =
+    analyticsTabs.find((t) => t.id === activeAnalyticsTab) || analyticsTabs[0];
 
   return (
     <div className="min-h-screen bg-[#07060f] text-white overflow-x-hidden">
@@ -597,6 +661,132 @@ export default function Home() {
                 Follow my 7K+ LinkedIn Journey <ExternalLink size={15} />
               </a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ================= 4. INTERACTIVE ANALYTICS PREVIEW ================= */}
+      <section className="py-20 px-4 sm:px-6 md:px-12 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300 mb-2">
+                LIVE METRICS SNAPSHOT
+              </p>
+              <h2 className="text-3xl sm:text-5xl font-extrabold">
+                Analytics <span className="text-zinc-500">in action.</span>
+              </h2>
+            </div>
+
+            <div className="flex flex-wrap gap-2">
+              {analyticsTabs.map((tab) => {
+                const active = activeAnalyticsTab === tab.id;
+                return (
+                  <button
+                    key={tab.id}
+                    onClick={() => setActiveAnalyticsTab(tab.id)}
+                    className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all border ${
+                      active
+                        ? 'bg-gradient-to-r from-indigo-600 to-purple-600 text-white border-purple-300/40 shadow-md shadow-purple-600/25'
+                        : 'bg-white/[0.04] text-zinc-300 border-white/10 hover:border-purple-400/40'
+                    }`}
+                  >
+                    {tab.label}
+                  </button>
+                );
+              })}
+            </div>
+          </div>
+
+          <motion.div
+            key={currentAnalytics.id}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3 }}
+            className="rounded-3xl bg-white/[0.03] border border-white/10 p-6 sm:p-8 backdrop-blur-xl space-y-6"
+          >
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <div>
+                <span className="text-[11px] font-bold uppercase tracking-widest px-3 py-1 rounded-full bg-purple-500/15 text-purple-300 border border-purple-400/25">
+                  {currentAnalytics.badge}
+                </span>
+                <p className="text-zinc-300 text-sm sm:text-base mt-3 max-w-2xl">
+                  {currentAnalytics.summary}
+                </p>
+              </div>
+              <Link
+                to="/projects"
+                className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold text-purple-300 hover:text-white transition"
+              >
+                Explore Projects <ArrowRight size={15} />
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {currentAnalytics.metrics.map((m) => (
+                <div
+                  key={m.name}
+                  className="p-5 rounded-2xl bg-[#0c0a1a]/90 border border-white/10"
+                >
+                  <p className="text-xs text-zinc-400 font-medium">{m.name}</p>
+                  <p className="text-2xl sm:text-3xl font-extrabold text-white mt-1.5">
+                    {m.value}
+                  </p>
+                  <p className="text-[11px] text-purple-300/80 mt-1">{m.note}</p>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* ================= 5. FEATURED LINKEDIN INSIGHTS ================= */}
+      <section className="py-20 px-4 sm:px-6 md:px-12 border-t border-white/10">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300 mb-2">
+                7K+ COMMUNITY INSIGHTS
+              </p>
+              <h2 className="text-3xl sm:text-5xl font-extrabold">
+                Featured <span className="text-zinc-500">LinkedIn themes.</span>
+              </h2>
+            </div>
+
+            <a
+              href="https://www.linkedin.com/in/priyanshudubey1608"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-full bg-white/[0.05] border border-white/15 hover:border-purple-400 text-xs sm:text-sm font-semibold text-purple-200 transition"
+            >
+              Visit LinkedIn Profile <ExternalLink size={15} />
+            </a>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {linkedinHighlights.map((item) => (
+              <div
+                key={item.title}
+                className="p-6 rounded-3xl bg-white/[0.03] border border-white/10 hover:border-purple-400/40 transition-all flex flex-col justify-between gap-4"
+              >
+                <div>
+                  <span className="text-[10px] font-bold tracking-widest uppercase text-pink-400">
+                    {item.tag}
+                  </span>
+                  <h3 className="text-lg font-bold text-white mt-2">{item.title}</h3>
+                  <p className="text-sm text-zinc-400 mt-2 leading-relaxed">{item.takeaway}</p>
+                </div>
+
+                <a
+                  href="https://www.linkedin.com/in/priyanshudubey1608"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-purple-300 hover:text-white transition"
+                >
+                  Read on LinkedIn <ExternalLink size={13} />
+                </a>
+              </div>
+            ))}
           </div>
         </div>
       </section>
