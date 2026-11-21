@@ -133,7 +133,6 @@ function DataConstellation() {
         if (n.x < 0 || n.x > canvas.width) n.vx *= -1;
         if (n.y < 0 || n.y > canvas.height) n.vy *= -1;
 
-        // Connect nearby nodes
         for (let j = i + 1; j < nodes.length; j++) {
           const m = nodes[j];
           const dist = Math.hypot(n.x - m.x, n.y - m.y);
@@ -147,7 +146,6 @@ function DataConstellation() {
           }
         }
 
-        // Connect to mouse cursor
         const mDist = Math.hypot(n.x - mouse.x, n.y - mouse.y);
         if (mDist < 140) {
           ctx.beginPath();
@@ -158,7 +156,6 @@ function DataConstellation() {
           ctx.stroke();
         }
 
-        // Draw glowing node
         ctx.beginPath();
         ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
         ctx.fillStyle = mDist < 140 ? '#f472b6' : '#c4b5fd';
@@ -231,7 +228,7 @@ export default function Home() {
           }}
         />
 
-        {/* Cursor Spotlight Hover-Reveal Layer (Vibrant Aurora Revealed on Hover) */}
+        {/* Cursor Spotlight Hover-Reveal Layer */}
         <div
           className="pointer-events-none absolute inset-0 transition-opacity duration-500"
           style={{
@@ -247,14 +244,14 @@ export default function Home() {
         <div className="pointer-events-none absolute -top-24 -left-24 w-[420px] h-[420px] bg-indigo-600/20 rounded-full blur-[130px]" />
         <div className="pointer-events-none absolute bottom-0 right-0 w-[420px] h-[420px] bg-purple-600/15 rounded-full blur-[130px]" />
 
-        <div className="max-w-7xl mx-auto px-6 md:px-12 w-full relative z-10">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-12 w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
             {/* Left Side */}
             <motion.div
               initial={{ opacity: 0, y: 28 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.7 }}
-              className="lg:col-span-7 space-y-6"
+              className="lg:col-span-7 space-y-6 min-w-0"
             >
               {/* Top Badges: 7K+ LinkedIn & Creator */}
               <div className="flex flex-wrap items-center gap-3">
@@ -262,32 +259,32 @@ export default function Home() {
                   href="https://www.linkedin.com/in/priyanshudubey1608"
                   target="_blank"
                   rel="noreferrer"
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/[0.06] border border-purple-400/30 hover:border-purple-400 hover:bg-white/[0.1] transition-all text-xs sm:text-sm font-bold text-purple-200 backdrop-blur-md"
+                  className="inline-flex flex-wrap items-center gap-2 px-4 py-2 rounded-full bg-white/[0.06] border border-purple-400/30 hover:border-purple-400 hover:bg-white/[0.1] transition-all text-xs sm:text-sm font-bold text-purple-200 backdrop-blur-md"
                 >
-                  <span className="relative flex h-2.5 w-2.5">
+                  <span className="relative flex h-2.5 w-2.5 shrink-0">
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-purple-400 opacity-75" />
                     <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-purple-500" />
                   </span>
-                  <Users size={15} className="text-purple-300" />
+                  <Users size={15} className="text-purple-300 shrink-0" />
                   <span>7K+ LinkedIn Followers</span>
                   <span className="text-zinc-600">•</span>
                   <span className="text-pink-400">LinkedIn Content Creator</span>
                 </a>
 
                 <span className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/25 text-xs font-semibold text-emerald-300">
-                  <MapPin size={14} /> Open to Opportunities • Pune
+                  <MapPin size={14} className="shrink-0" /> Open to Opportunities • Pune
                 </span>
               </div>
 
               {/* Cinematic Headline */}
               <div>
                 <div className="flex items-center gap-3 mb-3">
-                  <span className="w-8 h-[1px] bg-purple-400/70" />
-                  <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300/90">
+                  <span className="w-8 h-[1px] bg-purple-400/70 shrink-0" />
+                  <p className="text-[11px] sm:text-xs font-bold uppercase tracking-[0.2em] sm:tracking-[0.25em] text-purple-300/90">
                     MCA&apos;28 • DATA ANALYTICS • BI
                   </p>
                 </div>
-                <h1 className="text-5xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.06]">
+                <h1 className="text-3xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.12] sm:leading-[1.06]">
                   Where Data Meets{' '}
                   <span className="bg-gradient-to-r from-indigo-300 via-purple-300 to-pink-400 bg-clip-text text-transparent">
                     Intelligence.
@@ -295,25 +292,26 @@ export default function Home() {
                 </h1>
               </div>
 
-              {/* Rotating Role */}
-              <div className="h-9 flex items-center overflow-hidden">
+              {/* Rotating Role (Mobile-safe wrapping & height) */}
+              <div className="min-h-12 sm:min-h-10 flex items-center">
                 <AnimatePresence mode="wait">
                   <motion.p
                     key={roles[roleIndex]}
-                    initial={{ opacity: 0, y: 16 }}
+                    initial={{ opacity: 0, y: 12 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -16 }}
-                    transition={{ duration: 0.35 }}
-                    className="text-xl sm:text-2xl font-bold text-zinc-200 flex items-center gap-2"
+                    exit={{ opacity: 0, y: -12 }}
+                    transition={{ duration: 0.3 }}
+                    className="text-base sm:text-2xl font-bold text-zinc-200 flex flex-wrap items-center gap-2 leading-snug"
                   >
-                    <Sparkles size={20} className="text-purple-400 shrink-0" />
-                    Priyanshu Dubey — {roles[roleIndex]}
+                    <Sparkles size={18} className="text-purple-400 shrink-0" />
+                    <span>Priyanshu Dubey —</span>
+                    <span className="text-purple-300">{roles[roleIndex]}</span>
                   </motion.p>
                 </AnimatePresence>
               </div>
 
               {/* Bio */}
-              <p className="text-zinc-400 text-base sm:text-lg leading-relaxed max-w-2xl">
+              <p className="text-zinc-400 text-sm sm:text-lg leading-relaxed max-w-2xl">
                 Pursuing <strong className="text-white">MCA at SPPU, Pune</strong>. I transform raw datasets
                 into clear business insights using{' '}
                 <strong className="text-white">Python, SQL, Power BI &amp; Machine Learning</strong> — while
@@ -321,10 +319,10 @@ export default function Home() {
               </p>
 
               {/* CTA Buttons */}
-              <div className="flex flex-wrap items-center gap-4 pt-2">
+              <div className="flex flex-wrap items-center gap-3 sm:gap-4 pt-2">
                 <Link
                   to="/projects"
-                  className="group px-7 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-purple-600/30 hover:shadow-purple-500/50 hover:-translate-y-0.5 transition-all flex items-center gap-2"
+                  className="group px-6 sm:px-7 py-3.5 rounded-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white font-semibold shadow-lg shadow-purple-600/30 hover:shadow-purple-500/50 hover:-translate-y-0.5 transition-all flex items-center gap-2 text-sm sm:text-base"
                 >
                   View My Work
                   <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
@@ -332,7 +330,7 @@ export default function Home() {
 
                 <Link
                   to="/certificates"
-                  className="px-6 py-3.5 rounded-full bg-white/[0.06] text-white font-semibold border border-white/15 hover:border-purple-400 hover:bg-white/[0.1] transition-all flex items-center gap-2"
+                  className="px-5 sm:px-6 py-3.5 rounded-full bg-white/[0.06] text-white font-semibold border border-white/15 hover:border-purple-400 hover:bg-white/[0.1] transition-all flex items-center gap-2 text-sm sm:text-base"
                 >
                   <FileText size={18} /> Offer Letters &amp; Certs
                 </Link>
@@ -358,7 +356,7 @@ export default function Home() {
               <motion.div
                 animate={{ rotate: 360 }}
                 transition={{ duration: 40, repeat: Infinity, ease: 'linear' }}
-                className="absolute w-80 h-80 sm:w-[400px] sm:h-[400px] rounded-full border border-dashed border-purple-400/25 pointer-events-none"
+                className="absolute w-72 h-72 sm:w-[400px] sm:h-[400px] rounded-full border border-dashed border-purple-400/25 pointer-events-none"
               />
 
               <motion.div
@@ -391,7 +389,7 @@ export default function Home() {
                 <motion.div
                   animate={{ y: [0, -8, 0] }}
                   transition={{ duration: 3.4, repeat: Infinity, ease: 'easeInOut' }}
-                  className="absolute -top-4 -left-6 sm:-left-10 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-purple-400/25 flex items-center gap-2 text-xs font-bold text-white"
+                  className="hidden sm:flex absolute -top-4 -left-10 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-purple-400/25 items-center gap-2 text-xs font-bold text-white"
                 >
                   <Database size={15} className="text-purple-400" />
                   Python &amp; SQL
@@ -400,7 +398,7 @@ export default function Home() {
                 <motion.div
                   animate={{ y: [0, 8, 0] }}
                   transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }}
-                  className="absolute top-1/2 -right-6 sm:-right-12 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-pink-400/25 flex items-center gap-2 text-xs font-bold text-white"
+                  className="hidden sm:flex absolute top-1/2 -right-12 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-pink-400/25 items-center gap-2 text-xs font-bold text-white"
                 >
                   <TrendingUp size={15} className="text-pink-400" />
                   7K+ LinkedIn
@@ -409,7 +407,7 @@ export default function Home() {
                 <motion.div
                   animate={{ y: [0, -6, 0] }}
                   transition={{ duration: 3.8, repeat: Infinity, ease: 'easeInOut', delay: 0.8 }}
-                  className="absolute -bottom-4 -right-4 sm:-right-8 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-indigo-400/25 flex items-center gap-2 text-xs font-bold text-white"
+                  className="hidden sm:flex absolute -bottom-4 -right-8 bg-[#121024]/90 backdrop-blur-xl px-4 py-2.5 rounded-2xl shadow-xl border border-indigo-400/25 items-center gap-2 text-xs font-bold text-white"
                 >
                   <BarChart3 size={15} className="text-indigo-400" />
                   Power BI &amp; ML
@@ -421,7 +419,7 @@ export default function Home() {
       </section>
 
       {/* ================= 2. 5-STEP GLOWING PATH PROCESS SECTION ================= */}
-      <section className="py-24 px-6 md:px-12 relative border-t border-white/10">
+      <section className="py-20 sm:py-24 px-4 sm:px-6 md:px-12 relative border-t border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="mb-14">
             <div className="flex items-center gap-3 mb-3">
@@ -441,7 +439,6 @@ export default function Home() {
 
           {/* 5 Capsules + Animated Glowing SVG Path */}
           <div className="relative py-8">
-            {/* Glowing Wave Path (Desktop) */}
             <svg
               key={pathKey}
               viewBox="0 0 1000 180"
@@ -467,8 +464,7 @@ export default function Home() {
               />
             </svg>
 
-            {/* 5 Vertical Glass Capsules */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-5 relative z-10">
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 sm:gap-5 relative z-10">
               {processSteps.map((step, index) => {
                 const isSelected = activeStep === index;
                 return (
@@ -476,7 +472,7 @@ export default function Home() {
                     key={step.num}
                     onClick={() => setActiveStep(index)}
                     whileHover={{ y: -10, scale: 1.03 }}
-                    className={`group text-center flex flex-col items-center justify-center rounded-[3rem] py-10 px-4 border transition-all duration-300 backdrop-blur-xl ${
+                    className={`group text-center flex flex-col items-center justify-center rounded-[2.5rem] sm:rounded-[3rem] py-8 sm:py-10 px-3 sm:px-4 border transition-all duration-300 backdrop-blur-xl ${
                       step.offset
                     } ${
                       isSelected
@@ -485,14 +481,14 @@ export default function Home() {
                     }`}
                   >
                     <span
-                      className={`text-4xl font-extrabold transition-colors ${
+                      className={`text-3xl sm:text-4xl font-extrabold transition-colors ${
                         isSelected ? 'text-white' : 'text-zinc-500 group-hover:text-zinc-200'
                       }`}
                     >
                       {step.num}
                     </span>
-                    <h3 className="mt-4 text-base font-bold text-white">{step.title}</h3>
-                    <p className="mt-1 text-[10px] font-semibold tracking-widest text-purple-300/80 uppercase">
+                    <h3 className="mt-3 sm:mt-4 text-sm sm:text-base font-bold text-white">{step.title}</h3>
+                    <p className="mt-1 text-[9px] sm:text-[10px] font-semibold tracking-widest text-purple-300/80 uppercase">
                       {step.subtitle}
                     </p>
                   </motion.button>
@@ -534,7 +530,7 @@ export default function Home() {
                 ))}
               </ul>
 
-              <div className="flex items-center gap-3 pt-2">
+              <div className="flex flex-wrap items-center gap-3 pt-2">
                 <button
                   onClick={() => setActiveStep((prev) => (prev + 1) % processSteps.length)}
                   className="px-5 py-2.5 rounded-full bg-white text-black text-xs font-bold hover:bg-purple-200 transition flex items-center gap-1.5"
@@ -557,7 +553,7 @@ export default function Home() {
       </section>
 
       {/* ================= 3. INTERACTIVE AI / DATA NETWORK SECTION ================= */}
-      <section className="py-20 px-6 md:px-12 border-t border-white/10">
+      <section className="py-20 px-4 sm:px-6 md:px-12 border-t border-white/10">
         <div className="max-w-6xl mx-auto">
           <div className="mb-10">
             <p className="text-xs font-bold uppercase tracking-[0.25em] text-purple-300 mb-2">
